@@ -1,0 +1,21 @@
+# Keil project files
+*.uvguix.*
+
+# Build output directories
+DebugConfig/
+Listings/
+Objects/
+
+# Temporary files
+*.map
+*.crf
+*.d
+*.o
+*.dep
+*.axf
+*.htm
+*.lnp
+*.sct
+
+# vscode files
+.vscode/
