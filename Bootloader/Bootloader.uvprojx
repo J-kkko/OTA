@@ -742,6 +742,16 @@
               <FileType>5</FileType>
               <FilePath>.\Hardware\OLED_Font.h</FilePath>
             </File>
+            <File>
+              <FileName>Spi_Driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\Spi_Driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>Spi_Driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\Spi_Driver.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
