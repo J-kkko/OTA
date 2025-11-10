@@ -1,16 +1,6 @@
 #include "stm32f10x.h"
 #include "Delay.h"
 
-void Spi_Start(void)
-{
-	GPIO_ResetBits(GPIOA,GPIO_Pin_4); 					    // 片选拉低
-}
-
-void Spi_Stop(void)
-{
-	GPIO_SetBits(GPIOA,GPIO_Pin_4); 						// 片选拉高
-}
-
 void Spi_Init(void)
 {
 	/* 使能GPIOA和SPI1时钟 */
@@ -19,18 +9,18 @@ void Spi_Init(void)
 
 	/* GPIO初始化 */
 	GPIO_InitTypeDef GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPU;				//上拉输入
-	GPIO_InitStructure.GPIO_Pin=GPIO_Pin_4;
-	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;			//输入模式下没啥用
+	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPU;							//上拉输入
+	GPIO_InitStructure.GPIO_Pin=GPIO_Pin_6;								// MISO
+	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;						//输入模式下没啥用
 	GPIO_Init(GPIOA,&GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;	    // 推挽输出
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4; 			    // SS
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;	    			// 推挽输出
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4; 			    			// SS
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		// 复用推挽输出
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7;  // SCK 和 MOSI
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 					// 复用推挽输出
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7;  			// SCK 和 MOSI
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
@@ -49,6 +39,16 @@ void Spi_Init(void)
 	SPI_Init(SPI1, &SPI_InitStructure);
 
 	SPI_Cmd(SPI1, ENABLE); 												 // 使能SPI外设
+}
+
+void Spi_Start(void)
+{
+	GPIO_ResetBits(GPIOA, GPIO_Pin_4); // 片选拉低
+}
+
+void Spi_Stop(void)
+{
+	GPIO_SetBits(GPIOA, GPIO_Pin_4); // 片选拉高
 }
 
 uint8_t Spi_WriteReadByte(uint8_t TxData)
