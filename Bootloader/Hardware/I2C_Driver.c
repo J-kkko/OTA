@@ -26,7 +26,7 @@ void IIC_Init(void)
 	I2C_Cmd(I2C2, ENABLE); // 使能I2C外设
 }
 
-void IIC_WaitEvent(I2C_TypeDef *I2Cx, uint32_t I2C_EVENT)
+uint8_t IIC_WaitEvent(I2C_TypeDef *I2Cx, uint32_t I2C_EVENT)
 {
 	uint32_t Timeout;
 	Timeout = 10000;								   									// 给定超时计数时间
@@ -35,10 +35,10 @@ void IIC_WaitEvent(I2C_TypeDef *I2Cx, uint32_t I2C_EVENT)
 		Timeout--;		  																
 		if (Timeout == 0) 																// 自减到0后，等待超时
 		{
-			/*超时的错误处理代码，可以添加到此处*/
 			break; 																		// 跳出等待，不等了
 		}
 	}
+	return (Timeout == 0) ? 0 : 1;														// 返回是否超时的标志，0表示超时，1表示未超时
 }
 
 void IIC_Write_N_Byte(uint8_t deviceAddress, uint8_t registerAddress, uint8_t *wdata, uint8_t dataLen)
